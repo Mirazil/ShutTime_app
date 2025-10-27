@@ -24,6 +24,8 @@ namespace ShutdownTimerApp
         private void ApplyLocalization()
         {
             Text = I18n.T("SettingsTitle");
+            lblTitle.Text = I18n.T("Settings_Title_Highlight");
+            lblSubtitle.Text = I18n.T("Settings_Subtitle");
             lblLanguage.Text = I18n.T("Language");
             lblTheme.Text = I18n.T("Theme");
             chkAutostart.Text = I18n.T("RunOnStartup");
