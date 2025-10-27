@@ -10,7 +10,9 @@ namespace ShutdownTimerApp
         private Label lblTheme;
         private ComboBox cmbLanguage;
         private ComboBox cmbTheme;
+        private FlowLayoutPanel flowAutostartOptions;
         private CheckBox chkAutostart;
+        private CheckBox chkRunMinimized;
         private CheckBox chkMinimizeOnClose;
         private Button btnOK;
         private Button btnCancel;
@@ -35,7 +37,9 @@ namespace ShutdownTimerApp
             lblTheme = new Label();
             cmbLanguage = new ComboBox();
             cmbTheme = new ComboBox();
+            flowAutostartOptions = new FlowLayoutPanel();
             chkAutostart = new CheckBox();
+            chkRunMinimized = new CheckBox();
             chkMinimizeOnClose = new CheckBox();
             btnOK = new Button();
             btnCancel = new Button();
@@ -82,7 +86,7 @@ namespace ShutdownTimerApp
             cardLayout.Controls.Add(cmbLanguage, 0, 3);
             cardLayout.Controls.Add(lblTheme, 0, 4);
             cardLayout.Controls.Add(cmbTheme, 0, 5);
-            cardLayout.Controls.Add(chkAutostart, 0, 6);
+            cardLayout.Controls.Add(flowAutostartOptions, 0, 6);
             cardLayout.Controls.Add(chkMinimizeOnClose, 0, 7);
             cardLayout.Controls.Add(flowButtons, 0, 8);
             cardLayout.Dock = DockStyle.Fill;
@@ -133,10 +137,25 @@ namespace ShutdownTimerApp
             cmbTheme.IntegralHeight = false;
             cmbTheme.Margin = new Padding(0, 0, 0, 8);
 
+            // flowAutostartOptions
+            flowAutostartOptions.AutoSize = true;
+            flowAutostartOptions.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowAutostartOptions.FlowDirection = FlowDirection.LeftToRight;
+            flowAutostartOptions.Margin = new Padding(0, 10, 0, 0);
+            flowAutostartOptions.WrapContents = false;
+            flowAutostartOptions.Controls.Add(chkAutostart);
+            flowAutostartOptions.Controls.Add(chkRunMinimized);
+
             // chkAutostart
             chkAutostart.AutoSize = true;
             chkAutostart.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            chkAutostart.Margin = new Padding(0, 10, 0, 0);
+            chkAutostart.Margin = new Padding(0, 0, 12, 0);
+            chkAutostart.CheckedChanged += chkAutostart_CheckedChanged;
+
+            // chkRunMinimized
+            chkRunMinimized.AutoSize = true;
+            chkRunMinimized.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            chkRunMinimized.Margin = new Padding(0);
 
             // chkMinimizeOnClose
             chkMinimizeOnClose.AutoSize = true;

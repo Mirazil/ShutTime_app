@@ -29,6 +29,7 @@ namespace ShutdownTimerApp
             lblLanguage.Text = I18n.T("Language");
             lblTheme.Text = I18n.T("Theme");
             chkAutostart.Text = I18n.T("RunOnStartup");
+            chkRunMinimized.Text = I18n.T("RunMinimized");
             chkMinimizeOnClose.Text = I18n.T("MinimizeOnClose");
             btnOK.Text = I18n.T("Btn_OK");
             btnCancel.Text = I18n.T("Btn_Cancel");
@@ -60,6 +61,8 @@ namespace ShutdownTimerApp
 
             chkAutostart.Checked = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
             chkMinimizeOnClose.Checked = AppConfig.Current.MinimizeOnClose;
+            chkRunMinimized.Checked = AppConfig.Current.RunMinimized;
+            UpdateRunMinimizedState();
         }
 
         private void btnOK_Click(object? sender, EventArgs e)
@@ -74,6 +77,7 @@ namespace ShutdownTimerApp
                 AppConfig.Current.Theme = selectedTheme.Value;
             }
             AppConfig.Current.RunOnStartup = chkAutostart.Checked;
+            AppConfig.Current.RunMinimized = chkAutostart.Checked && chkRunMinimized.Checked;
             AppConfig.Current.MinimizeOnClose = chkMinimizeOnClose.Checked;
 
             AutoStartHelper.Set(chkAutostart.Checked);
@@ -87,6 +91,21 @@ namespace ShutdownTimerApp
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void chkAutostart_CheckedChanged(object? sender, EventArgs e)
+        {
+            UpdateRunMinimizedState();
+        }
+
+        private void UpdateRunMinimizedState()
+        {
+            bool enabled = chkAutostart.Checked;
+            chkRunMinimized.Enabled = enabled;
+            if (!enabled)
+            {
+                chkRunMinimized.Checked = false;
+            }
         }
     }
 }
