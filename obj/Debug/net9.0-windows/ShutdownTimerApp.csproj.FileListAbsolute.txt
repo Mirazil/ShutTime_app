@@ -12,3 +12,4 @@ C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\refint\ShutdownTime
 C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.pdb
 C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.genruntimeconfig.cache
 C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ref\ShutdownTimerApp.dll
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.sourcelink.json
