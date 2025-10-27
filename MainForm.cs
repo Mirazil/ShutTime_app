@@ -69,7 +69,7 @@ namespace ShutdownTimerApp
             maskedTextBoxTime.Text = "004500"; // 00:45:00
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object? sender, EventArgs e)
         {
             if (idleMode)
             {
