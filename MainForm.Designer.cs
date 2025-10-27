@@ -136,7 +136,7 @@ namespace ShutdownTimerApp
             timerCardLayout.Controls.Add(maskedTextBoxTime, 0, 8);
             timerCardLayout.Controls.Add(buttonStart, 0, 9);
             timerCardLayout.Dock = DockStyle.Fill;
-            timerCardLayout.Padding = new Padding(24);
+            timerCardLayout.Padding = new Padding(24, 24, 24, 16);
             timerCardLayout.RowCount = 10;
             timerCardLayout.RowStyles.Add(new RowStyle());
             timerCardLayout.RowStyles.Add(new RowStyle());
@@ -157,13 +157,13 @@ namespace ShutdownTimerApp
             // labelTimerSubtitle
             labelTimerSubtitle.AutoSize = true;
             labelTimerSubtitle.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTimerSubtitle.Margin = new Padding(0, 0, 0, 16);
+            labelTimerSubtitle.Margin = new Padding(0, 0, 0, 12);
             labelTimerSubtitle.Tag = "muted";
 
             // labelCountdown
             labelCountdown.Dock = DockStyle.Fill;
             labelCountdown.Font = new Font("Segoe UI Semibold", 42F, FontStyle.Bold, GraphicsUnit.Point);
-            labelCountdown.Margin = new Padding(0, 8, 0, 24);
+            labelCountdown.Margin = new Padding(0, 4, 0, 16);
             labelCountdown.MinimumSize = new Size(0, 120);
             labelCountdown.Text = "00:00:00";
             labelCountdown.TextAlign = ContentAlignment.MiddleCenter;
@@ -178,7 +178,7 @@ namespace ShutdownTimerApp
             comboBoxAction.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxAction.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAction.IntegralHeight = false;
-            comboBoxAction.Margin = new Padding(0, 0, 0, 16);
+            comboBoxAction.Margin = new Padding(0, 0, 0, 12);
 
             // labelConditionCaption
             labelConditionCaption.AutoSize = true;
@@ -190,19 +190,19 @@ namespace ShutdownTimerApp
             comboBoxCondition.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxCondition.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxCondition.IntegralHeight = false;
-            comboBoxCondition.Margin = new Padding(0, 0, 0, 16);
+            comboBoxCondition.Margin = new Padding(0, 0, 0, 12);
             comboBoxCondition.SelectedIndexChanged += comboBoxCondition_SelectedIndexChanged;
 
             // labelTimeCaption
             labelTimeCaption.AutoSize = true;
             labelTimeCaption.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            labelTimeCaption.Margin = new Padding(0, 8, 0, 6);
+            labelTimeCaption.Margin = new Padding(0, 6, 0, 6);
 
             // maskedTextBoxTime
             maskedTextBoxTime.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             maskedTextBoxTime.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             maskedTextBoxTime.Mask = "00:00:00";
-            maskedTextBoxTime.Margin = new Padding(0, 0, 0, 24);
+            maskedTextBoxTime.Margin = new Padding(0, 0, 0, 16);
             maskedTextBoxTime.Text = "004500";
             maskedTextBoxTime.TextAlign = HorizontalAlignment.Center;
 
