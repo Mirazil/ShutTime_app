@@ -7,7 +7,7 @@ namespace ShutdownTimerApp
 {
     public partial class MainForm : Form
     {
-        private Timer timer;
+        private System.Windows.Forms.Timer timer;
         private TimeSpan remainingTime;
         private bool isRunning = false;
         private bool idleMode = false; // режим «при бездействии»
@@ -24,7 +24,7 @@ namespace ShutdownTimerApp
 
         private void InitTimer()
         {
-            timer = new Timer { Interval = 1000 };
+            timer = new System.Windows.Forms.Timer { Interval = 1000 };
             timer.Tick += Timer_Tick;
         }
 
