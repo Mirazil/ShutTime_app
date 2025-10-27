@@ -1,0 +1,15 @@
+C:\Users\kso_chibi\ShutdownTimerApp\bin\Debug\net9.0-windows\ShutdownTimerApp.exe
+C:\Users\kso_chibi\ShutdownTimerApp\bin\Debug\net9.0-windows\ShutdownTimerApp.deps.json
+C:\Users\kso_chibi\ShutdownTimerApp\bin\Debug\net9.0-windows\ShutdownTimerApp.runtimeconfig.json
+C:\Users\kso_chibi\ShutdownTimerApp\bin\Debug\net9.0-windows\ShutdownTimerApp.dll
+C:\Users\kso_chibi\ShutdownTimerApp\bin\Debug\net9.0-windows\ShutdownTimerApp.pdb
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.AssemblyInfoInputs.cache
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.AssemblyInfo.cs
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.csproj.CoreCompileInputs.cache
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.dll
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\refint\ShutdownTimerApp.dll
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.pdb
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.genruntimeconfig.cache
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ref\ShutdownTimerApp.dll
+C:\Users\kso_chibi\ShutdownTimerApp\obj\Debug\net9.0-windows\ShutdownTimerApp.sourcelink.json
