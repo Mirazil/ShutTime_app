@@ -7,6 +7,19 @@ namespace ShutdownTimerApp
 {
     public partial class MainForm : Form
     {
+        private class OptionItem<T>
+        {
+            public OptionItem(string text, T value)
+            {
+                Text = text;
+                Value = value;
+            }
+
+            public string Text { get; }
+            public T Value { get; }
+            public override string ToString() => Text;
+        }
+
         private System.Windows.Forms.Timer timer;
         private TimeSpan remainingTime;
         private bool isRunning = false;
@@ -31,9 +44,17 @@ namespace ShutdownTimerApp
         private void ApplyLocalization()
         {
             Text = I18n.T("Title");
+            tabPageTimer.Text = I18n.T("Tab_Timer");
+            tabPageSettings.Text = I18n.T("Tab_Settings");
             labelTimeCaption.Text = I18n.T("Caption_Time");
+            labelSettingsLanguage.Text = I18n.T("Language");
+            labelSettingsTheme.Text = I18n.T("Theme");
+            checkBoxAutostart.Text = I18n.T("RunOnStartup");
+            buttonApplySettings.Text = I18n.T("Btn_OK");
             RefillActionItems();
             RefillConditionItems();
+            PopulateSettingsLists();
+            LoadSettingsValues();
         }
 
         private void RefillActionItems()
@@ -67,6 +88,75 @@ namespace ShutdownTimerApp
         {
             labelCountdown.Text = "00:00:00";
             maskedTextBoxTime.Text = "004500"; // 00:45:00
+        }
+
+        private void PopulateSettingsLists()
+        {
+            var selectedLanguage = comboBoxLanguage.SelectedItem as OptionItem<AppLanguage>;
+            var selectedTheme = comboBoxTheme.SelectedItem as OptionItem<AppTheme>;
+
+            comboBoxLanguage.Items.Clear();
+            comboBoxLanguage.Items.AddRange(new object[]
+            {
+                new OptionItem<AppLanguage>("Русский", AppLanguage.Russian),
+                new OptionItem<AppLanguage>("English", AppLanguage.English),
+                new OptionItem<AppLanguage>("Українська", AppLanguage.Ukrainian),
+            });
+
+            comboBoxTheme.Items.Clear();
+            comboBoxTheme.Items.AddRange(new object[]
+            {
+                new OptionItem<AppTheme>(I18n.T("Theme_Light"), AppTheme.Light),
+                new OptionItem<AppTheme>(I18n.T("Theme_Dark"), AppTheme.Dark),
+                new OptionItem<AppTheme>(I18n.T("Theme_System"), AppTheme.System),
+            });
+
+            if (selectedLanguage != null)
+            {
+                for (int i = 0; i < comboBoxLanguage.Items.Count; i++)
+                {
+                    if (((OptionItem<AppLanguage>)comboBoxLanguage.Items[i]).Value.Equals(selectedLanguage.Value))
+                    {
+                        comboBoxLanguage.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (selectedTheme != null)
+            {
+                for (int i = 0; i < comboBoxTheme.Items.Count; i++)
+                {
+                    if (((OptionItem<AppTheme>)comboBoxTheme.Items[i]).Value.Equals(selectedTheme.Value))
+                    {
+                        comboBoxTheme.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void LoadSettingsValues()
+        {
+            for (int i = 0; i < comboBoxLanguage.Items.Count; i++)
+            {
+                if (((OptionItem<AppLanguage>)comboBoxLanguage.Items[i]).Value == AppConfig.Current.Language)
+                {
+                    comboBoxLanguage.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < comboBoxTheme.Items.Count; i++)
+            {
+                if (((OptionItem<AppTheme>)comboBoxTheme.Items[i]).Value == AppConfig.Current.Theme)
+                {
+                    comboBoxTheme.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            checkBoxAutostart.Checked = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -197,16 +287,24 @@ namespace ShutdownTimerApp
             }
         }
 
-        private void settingsButton_Click(object sender, EventArgs e)
+        private void buttonApplySettings_Click(object sender, EventArgs e)
         {
-            using var dlg = new SettingsForm();
-            var res = dlg.ShowDialog(this);
-            if (res == DialogResult.OK)
+            if (comboBoxLanguage.SelectedItem is OptionItem<AppLanguage> language)
             {
-                // применяем новые настройки
-                ApplyLocalization();
-                ApplyTheme();
+                AppConfig.Current.Language = language.Value;
             }
+
+            if (comboBoxTheme.SelectedItem is OptionItem<AppTheme> theme)
+            {
+                AppConfig.Current.Theme = theme.Value;
+            }
+
+            AppConfig.Current.RunOnStartup = checkBoxAutostart.Checked;
+            AutoStartHelper.Set(checkBoxAutostart.Checked);
+            AppConfig.Save();
+
+            ApplyLocalization();
+            ApplyTheme();
         }
 
         private void comboBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
