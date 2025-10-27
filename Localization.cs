@@ -33,6 +33,8 @@ namespace ShutdownTimerApp
                 ["Caption_Time"] = "Время",
                 ["Btn_OK"] = "ОК",
                 ["Btn_Cancel"] = "Отмена",
+                ["Tab_Timer"] = "Таймер",
+                ["Tab_Settings"] = "Настройки",
             },
             [AppLanguage.English] = new()
             {
@@ -57,6 +59,8 @@ namespace ShutdownTimerApp
                 ["Caption_Time"] = "Time",
                 ["Btn_OK"] = "OK",
                 ["Btn_Cancel"] = "Cancel",
+                ["Tab_Timer"] = "Timer",
+                ["Tab_Settings"] = "Settings",
             },
             [AppLanguage.Ukrainian] = new()
             {
@@ -81,6 +85,8 @@ namespace ShutdownTimerApp
                 ["Caption_Time"] = "Час",
                 ["Btn_OK"] = "ОК",
                 ["Btn_Cancel"] = "Скасувати",
+                ["Tab_Timer"] = "Таймер",
+                ["Tab_Settings"] = "Налаштування",
             },
         };
 
