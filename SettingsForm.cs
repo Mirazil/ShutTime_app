@@ -58,10 +58,17 @@ namespace ShutdownTimerApp
             chkAutostart.Checked = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void btnOK_Click(object? sender, EventArgs e)
         {
-            AppConfig.Current.Language = ((OptionItem<AppLanguage>)cmbLanguage.SelectedItem).Value;
-            AppConfig.Current.Theme = ((OptionItem<AppTheme>)cmbTheme.SelectedItem).Value;
+            if (cmbLanguage.SelectedItem is OptionItem<AppLanguage> selectedLanguage)
+            {
+                AppConfig.Current.Language = selectedLanguage.Value;
+            }
+
+            if (cmbTheme.SelectedItem is OptionItem<AppTheme> selectedTheme)
+            {
+                AppConfig.Current.Theme = selectedTheme.Value;
+            }
             AppConfig.Current.RunOnStartup = chkAutostart.Checked;
 
             AutoStartHelper.Set(chkAutostart.Checked);
@@ -71,7 +78,7 @@ namespace ShutdownTimerApp
             Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object? sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();

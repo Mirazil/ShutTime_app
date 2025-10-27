@@ -7,7 +7,7 @@ namespace ShutdownTimerApp
 {
     public partial class MainForm : Form
     {
-        private Timer timer;
+        private readonly System.Windows.Forms.Timer timer = new();
         private TimeSpan remainingTime;
         private bool isRunning = false;
         private bool idleMode = false; // режим «при бездействии»
@@ -24,7 +24,7 @@ namespace ShutdownTimerApp
 
         private void InitTimer()
         {
-            timer = new Timer { Interval = 1000 };
+            timer.Interval = 1000;
             timer.Tick += Timer_Tick;
         }
 
@@ -69,7 +69,7 @@ namespace ShutdownTimerApp
             maskedTextBoxTime.Text = "004500"; // 00:45:00
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object? sender, EventArgs e)
         {
             if (idleMode)
             {
