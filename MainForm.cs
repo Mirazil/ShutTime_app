@@ -36,8 +36,14 @@ namespace ShutdownTimerApp
             ApplyTheme();
             SetupUI();
 
-            var icon = Icon ?? Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-            notifyIcon.Icon = icon ?? SystemIcons.Application;
+            var appIcon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            if (appIcon != null)
+            {
+                Icon = appIcon;
+            }
+
+            var icon = Icon ?? appIcon ?? SystemIcons.Application;
+            notifyIcon.Icon = icon;
         }
 
         protected override void OnShown(EventArgs e)
