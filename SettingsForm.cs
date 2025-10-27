@@ -29,6 +29,7 @@ namespace ShutdownTimerApp
             lblLanguage.Text = I18n.T("Language");
             lblTheme.Text = I18n.T("Theme");
             chkAutostart.Text = I18n.T("RunOnStartup");
+            chkMinimizeOnClose.Text = I18n.T("MinimizeOnClose");
             btnOK.Text = I18n.T("Btn_OK");
             btnCancel.Text = I18n.T("Btn_Cancel");
 
@@ -58,6 +59,7 @@ namespace ShutdownTimerApp
                     cmbTheme.SelectedIndex = i;
 
             chkAutostart.Checked = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
+            chkMinimizeOnClose.Checked = AppConfig.Current.MinimizeOnClose;
         }
 
         private void btnOK_Click(object? sender, EventArgs e)
@@ -72,6 +74,7 @@ namespace ShutdownTimerApp
                 AppConfig.Current.Theme = selectedTheme.Value;
             }
             AppConfig.Current.RunOnStartup = chkAutostart.Checked;
+            AppConfig.Current.MinimizeOnClose = chkMinimizeOnClose.Checked;
 
             AutoStartHelper.Set(chkAutostart.Checked);
             AppConfig.Save();

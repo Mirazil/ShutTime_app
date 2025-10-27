@@ -20,6 +20,7 @@ namespace ShutdownTimerApp
                 ["Theme_Dark"] = "Тёмная",
                 ["Theme_System"] = "Как в системе",
                 ["RunOnStartup"] = "Запускать с Windows",
+                ["MinimizeOnClose"] = "Сворачивать при закрытии",
 
                 ["Action_Shutdown"] = "Выключить компьютер",
                 ["Action_Sleep"] = "Спящий режим",
@@ -41,6 +42,10 @@ namespace ShutdownTimerApp
                 ["Btn_Cancel"] = "Отмена",
                 ["Tab_Timer"] = "Таймер",
                 ["Tab_Settings"] = "Настройки",
+                ["Tray_Show"] = "Приложение",
+                ["Tray_Exit"] = "Выйти",
+                ["ConfirmExitWithTimer_Title"] = "Закрытие приложения",
+                ["ConfirmExitWithTimer_Message"] = "Таймер сейчас активен. Вы уверены, что хотите закрыть приложение?",
             },
             [AppLanguage.English] = new()
             {
@@ -52,6 +57,7 @@ namespace ShutdownTimerApp
                 ["Theme_Dark"] = "Dark",
                 ["Theme_System"] = "System",
                 ["RunOnStartup"] = "Run at Windows startup",
+                ["MinimizeOnClose"] = "Minimize to tray on close",
 
                 ["Action_Shutdown"] = "Shut down",
                 ["Action_Sleep"] = "Sleep",
@@ -73,6 +79,10 @@ namespace ShutdownTimerApp
                 ["Btn_Cancel"] = "Cancel",
                 ["Tab_Timer"] = "Timer",
                 ["Tab_Settings"] = "Settings",
+                ["Tray_Show"] = "Application",
+                ["Tray_Exit"] = "Exit",
+                ["ConfirmExitWithTimer_Title"] = "Exit application",
+                ["ConfirmExitWithTimer_Message"] = "The timer is currently running. Are you sure you want to close the application?",
             },
             [AppLanguage.Ukrainian] = new()
             {
@@ -84,6 +94,7 @@ namespace ShutdownTimerApp
                 ["Theme_Dark"] = "Темна",
                 ["Theme_System"] = "Як у системі",
                 ["RunOnStartup"] = "Запускати з Windows",
+                ["MinimizeOnClose"] = "Згортати під час закриття",
 
                 ["Action_Shutdown"] = "Вимкнути комп'ютер",
                 ["Action_Sleep"] = "Режим сну",
@@ -105,6 +116,10 @@ namespace ShutdownTimerApp
                 ["Btn_Cancel"] = "Скасувати",
                 ["Tab_Timer"] = "Таймер",
                 ["Tab_Settings"] = "Налаштування",
+                ["Tray_Show"] = "Додаток",
+                ["Tray_Exit"] = "Вийти",
+                ["ConfirmExitWithTimer_Title"] = "Закриття застосунку",
+                ["ConfirmExitWithTimer_Message"] = "Таймер зараз активний. Ви впевнені, що хочете закрити застосунок?",
             },
         };
 

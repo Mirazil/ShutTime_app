@@ -32,7 +32,12 @@ namespace ShutdownTimerApp
         private Label labelSettingsTheme;
         private ComboBox comboBoxTheme;
         private CheckBox checkBoxAutostart;
+        private CheckBox checkBoxMinimizeOnClose;
         private Button buttonApplySettings;
+        private NotifyIcon notifyIcon;
+        private ContextMenuStrip trayMenu;
+        private ToolStripMenuItem trayMenuShow;
+        private ToolStripMenuItem trayMenuExit;
 
         protected override void Dispose(bool disposing)
         {
@@ -70,7 +75,12 @@ namespace ShutdownTimerApp
             labelSettingsTheme = new Label();
             comboBoxTheme = new ComboBox();
             checkBoxAutostart = new CheckBox();
+            checkBoxMinimizeOnClose = new CheckBox();
             buttonApplySettings = new Button();
+            notifyIcon = new NotifyIcon(components);
+            trayMenu = new ContextMenuStrip(components);
+            trayMenuShow = new ToolStripMenuItem();
+            trayMenuExit = new ToolStripMenuItem();
 
             tabControlMain.SuspendLayout();
             tabPageTimer.SuspendLayout();
@@ -255,10 +265,12 @@ namespace ShutdownTimerApp
             settingsCardLayout.Controls.Add(labelSettingsTheme, 0, 4);
             settingsCardLayout.Controls.Add(comboBoxTheme, 0, 5);
             settingsCardLayout.Controls.Add(checkBoxAutostart, 0, 6);
-            settingsCardLayout.Controls.Add(buttonApplySettings, 0, 7);
+            settingsCardLayout.Controls.Add(checkBoxMinimizeOnClose, 0, 7);
+            settingsCardLayout.Controls.Add(buttonApplySettings, 0, 8);
             settingsCardLayout.Dock = DockStyle.Fill;
             settingsCardLayout.Padding = new Padding(8);
-            settingsCardLayout.RowCount = 8;
+            settingsCardLayout.RowCount = 9;
+            settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
@@ -308,6 +320,11 @@ namespace ShutdownTimerApp
             checkBoxAutostart.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             checkBoxAutostart.Margin = new Padding(0, 8, 0, 0);
 
+            // checkBoxMinimizeOnClose
+            checkBoxMinimizeOnClose.AutoSize = true;
+            checkBoxMinimizeOnClose.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            checkBoxMinimizeOnClose.Margin = new Padding(0, 6, 0, 0);
+
             // buttonApplySettings
             buttonApplySettings.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             buttonApplySettings.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
@@ -316,6 +333,30 @@ namespace ShutdownTimerApp
             buttonApplySettings.Tag = "accent";
             buttonApplySettings.UseVisualStyleBackColor = false;
             buttonApplySettings.Click += buttonApplySettings_Click;
+
+            // trayMenu
+            trayMenu.ImageScalingSize = new Size(24, 24);
+            trayMenu.Items.AddRange(new ToolStripItem[] { trayMenuShow, trayMenuExit });
+            trayMenu.Name = "trayMenu";
+            trayMenu.Size = new Size(153, 68);
+
+            // trayMenuShow
+            trayMenuShow.Name = "trayMenuShow";
+            trayMenuShow.Size = new Size(152, 32);
+            trayMenuShow.Text = "Application";
+            trayMenuShow.Click += trayMenuShow_Click;
+
+            // trayMenuExit
+            trayMenuExit.Name = "trayMenuExit";
+            trayMenuExit.Size = new Size(152, 32);
+            trayMenuExit.Text = "Exit";
+            trayMenuExit.Click += trayMenuExit_Click;
+
+            // notifyIcon
+            notifyIcon.ContextMenuStrip = trayMenu;
+            notifyIcon.Text = "ShutTime 1.0";
+            notifyIcon.Visible = false;
+            notifyIcon.DoubleClick += notifyIcon_DoubleClick;
 
             // MainForm
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -329,6 +370,8 @@ namespace ShutdownTimerApp
             Padding = new Padding(8);
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ShutTime 1.0";
+            FormClosing += MainForm_FormClosing;
+            FormClosed += MainForm_FormClosed;
 
             tabPageTimer.ResumeLayout(false);
             layoutTimer.ResumeLayout(false);
