@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -24,6 +25,7 @@ namespace ShutdownTimerApp
         private TimeSpan remainingTime;
         private bool isRunning = false;
         private bool idleMode = false; // режим «при бездействии»
+        private bool exitRequested = false;
 
         public MainForm()
         {
@@ -33,6 +35,15 @@ namespace ShutdownTimerApp
             ApplyLocalization();
             ApplyTheme();
             SetupUI();
+
+            var icon = Icon ?? Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            notifyIcon.Icon = icon ?? SystemIcons.Application;
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            UpdateNotifyIconVisibility();
         }
 
         private void InitTimer()
@@ -56,7 +67,9 @@ namespace ShutdownTimerApp
             labelSettingsLanguage.Text = I18n.T("Language");
             labelSettingsTheme.Text = I18n.T("Theme");
             checkBoxAutostart.Text = I18n.T("RunOnStartup");
+            checkBoxMinimizeOnClose.Text = I18n.T("MinimizeOnClose");
             buttonApplySettings.Text = I18n.T("Btn_OK");
+            UpdateTrayLocalization();
             RefillActionItems();
             RefillConditionItems();
             PopulateSettingsLists();
@@ -164,6 +177,7 @@ namespace ShutdownTimerApp
             }
 
             checkBoxAutostart.Checked = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
+            checkBoxMinimizeOnClose.Checked = AppConfig.Current.MinimizeOnClose;
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -307,11 +321,13 @@ namespace ShutdownTimerApp
             }
 
             AppConfig.Current.RunOnStartup = checkBoxAutostart.Checked;
+            AppConfig.Current.MinimizeOnClose = checkBoxMinimizeOnClose.Checked;
             AutoStartHelper.Set(checkBoxAutostart.Checked);
             AppConfig.Save();
 
             ApplyLocalization();
             ApplyTheme();
+            UpdateNotifyIconVisibility();
         }
 
         private void comboBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
@@ -322,6 +338,98 @@ namespace ShutdownTimerApp
             {
                 maskedTextBoxTime.Text = "004500";
             }
+        }
+
+        private void notifyIcon_DoubleClick(object? sender, EventArgs e) => RestoreFromTray();
+
+        private void trayMenuShow_Click(object? sender, EventArgs e) => RestoreFromTray();
+
+        private void trayMenuExit_Click(object? sender, EventArgs e)
+        {
+            if (!ConfirmExitPrompt()) return;
+
+            exitRequested = true;
+            notifyIcon.Visible = false;
+            Close();
+        }
+
+        private void MainForm_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (!exitRequested && e.CloseReason == CloseReason.UserClosing && AppConfig.Current.MinimizeOnClose)
+            {
+                e.Cancel = true;
+                HideToTray();
+                return;
+            }
+
+            if (!exitRequested && ShouldConfirmExit(e.CloseReason) && !ConfirmExitPrompt())
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            notifyIcon.Visible = false;
+        }
+
+        private void MainForm_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            notifyIcon.Dispose();
+        }
+
+        private void HideToTray()
+        {
+            notifyIcon.Visible = true;
+            ShowInTaskbar = false;
+            Hide();
+            UpdateNotifyIconVisibility();
+        }
+
+        private void RestoreFromTray()
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+            ShowInTaskbar = true;
+            Activate();
+            exitRequested = false;
+            UpdateNotifyIconVisibility();
+        }
+
+        private bool ConfirmExitPrompt()
+        {
+            if (!isRunning) return true;
+
+            var result = MessageBox.Show(
+                I18n.T("ConfirmExitWithTimer_Message"),
+                I18n.T("ConfirmExitWithTimer_Title"),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2);
+
+            return result == DialogResult.Yes;
+        }
+
+        private bool ShouldConfirmExit(CloseReason reason)
+        {
+            if (!isRunning) return false;
+
+            return reason switch
+            {
+                CloseReason.WindowsShutDown => false,
+                CloseReason.TaskManagerClosing => false,
+                _ => true,
+            };
+        }
+
+        private void UpdateTrayLocalization()
+        {
+            trayMenuShow.Text = I18n.T("Tray_Show");
+            trayMenuExit.Text = I18n.T("Tray_Exit");
+            notifyIcon.Text = I18n.T("Title");
+        }
+
+        private void UpdateNotifyIconVisibility()
+        {
+            notifyIcon.Visible = AppConfig.Current.MinimizeOnClose || !Visible;
         }
     }
 }

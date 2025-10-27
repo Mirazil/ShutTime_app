@@ -11,6 +11,7 @@ namespace ShutdownTimerApp
         private ComboBox cmbLanguage;
         private ComboBox cmbTheme;
         private CheckBox chkAutostart;
+        private CheckBox chkMinimizeOnClose;
         private Button btnOK;
         private Button btnCancel;
         private TableLayoutPanel layoutRoot;
@@ -35,6 +36,7 @@ namespace ShutdownTimerApp
             cmbLanguage = new ComboBox();
             cmbTheme = new ComboBox();
             chkAutostart = new CheckBox();
+            chkMinimizeOnClose = new CheckBox();
             btnOK = new Button();
             btnCancel = new Button();
             layoutRoot = new TableLayoutPanel();
@@ -81,10 +83,12 @@ namespace ShutdownTimerApp
             cardLayout.Controls.Add(lblTheme, 0, 4);
             cardLayout.Controls.Add(cmbTheme, 0, 5);
             cardLayout.Controls.Add(chkAutostart, 0, 6);
-            cardLayout.Controls.Add(flowButtons, 0, 7);
+            cardLayout.Controls.Add(chkMinimizeOnClose, 0, 7);
+            cardLayout.Controls.Add(flowButtons, 0, 8);
             cardLayout.Dock = DockStyle.Fill;
             cardLayout.Padding = new Padding(8);
-            cardLayout.RowCount = 8;
+            cardLayout.RowCount = 9;
+            cardLayout.RowStyles.Add(new RowStyle());
             cardLayout.RowStyles.Add(new RowStyle());
             cardLayout.RowStyles.Add(new RowStyle());
             cardLayout.RowStyles.Add(new RowStyle());
@@ -133,6 +137,11 @@ namespace ShutdownTimerApp
             chkAutostart.AutoSize = true;
             chkAutostart.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             chkAutostart.Margin = new Padding(0, 10, 0, 0);
+
+            // chkMinimizeOnClose
+            chkMinimizeOnClose.AutoSize = true;
+            chkMinimizeOnClose.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            chkMinimizeOnClose.Margin = new Padding(0, 6, 0, 0);
 
             // flowButtons
             flowButtons.AutoSize = true;
