@@ -46,7 +46,13 @@ namespace ShutdownTimerApp
             Text = I18n.T("Title");
             tabPageTimer.Text = I18n.T("Tab_Timer");
             tabPageSettings.Text = I18n.T("Tab_Settings");
+            labelTimerTitle.Text = I18n.T("Timer_Title");
+            labelTimerSubtitle.Text = I18n.T("Timer_Subtitle");
+            labelActionCaption.Text = I18n.T("Caption_Action");
+            labelConditionCaption.Text = I18n.T("Caption_Condition");
             labelTimeCaption.Text = I18n.T("Caption_Time");
+            labelSettingsTitle.Text = I18n.T("Settings_Title_Highlight");
+            labelSettingsSubtitle.Text = I18n.T("Settings_Subtitle");
             labelSettingsLanguage.Text = I18n.T("Language");
             labelSettingsTheme.Text = I18n.T("Theme");
             checkBoxAutostart.Text = I18n.T("RunOnStartup");
@@ -88,6 +94,7 @@ namespace ShutdownTimerApp
         {
             labelCountdown.Text = "00:00:00";
             maskedTextBoxTime.Text = "004500"; // 00:45:00
+            buttonStart.Text = "▶";
         }
 
         private void PopulateSettingsLists()

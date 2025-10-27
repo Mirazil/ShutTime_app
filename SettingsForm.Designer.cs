@@ -13,6 +13,12 @@ namespace ShutdownTimerApp
         private CheckBox chkAutostart;
         private Button btnOK;
         private Button btnCancel;
+        private TableLayoutPanel layoutRoot;
+        private Panel panelCard;
+        private TableLayoutPanel cardLayout;
+        private Label lblTitle;
+        private Label lblSubtitle;
+        private FlowLayoutPanel flowButtons;
 
         protected override void Dispose(bool disposing)
         {
@@ -31,47 +37,153 @@ namespace ShutdownTimerApp
             chkAutostart = new CheckBox();
             btnOK = new Button();
             btnCancel = new Button();
+            layoutRoot = new TableLayoutPanel();
+            panelCard = new Panel();
+            cardLayout = new TableLayoutPanel();
+            lblTitle = new Label();
+            lblSubtitle = new Label();
+            flowButtons = new FlowLayoutPanel();
 
+            layoutRoot.SuspendLayout();
+            panelCard.SuspendLayout();
+            cardLayout.SuspendLayout();
             SuspendLayout();
 
-            // form
-            ClientSize = new Size(360, 240);
+            // layoutRoot
+            layoutRoot.AutoScroll = true;
+            layoutRoot.ColumnCount = 1;
+            layoutRoot.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            layoutRoot.Controls.Add(panelCard, 0, 0);
+            layoutRoot.Dock = DockStyle.Fill;
+            layoutRoot.RowCount = 2;
+            layoutRoot.RowStyles.Add(new RowStyle());
+            layoutRoot.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            layoutRoot.Tag = "transparent";
+
+            // panelCard
+            panelCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panelCard.AutoSize = true;
+            panelCard.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panelCard.Controls.Add(cardLayout);
+            panelCard.Margin = new Padding(0);
+            panelCard.MaximumSize = new Size(520, 0);
+            panelCard.Tag = "card";
+
+            // cardLayout
+            cardLayout.AutoSize = true;
+            cardLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            cardLayout.ColumnCount = 1;
+            cardLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            cardLayout.Controls.Add(lblTitle, 0, 0);
+            cardLayout.Controls.Add(lblSubtitle, 0, 1);
+            cardLayout.Controls.Add(lblLanguage, 0, 2);
+            cardLayout.Controls.Add(cmbLanguage, 0, 3);
+            cardLayout.Controls.Add(lblTheme, 0, 4);
+            cardLayout.Controls.Add(cmbTheme, 0, 5);
+            cardLayout.Controls.Add(chkAutostart, 0, 6);
+            cardLayout.Controls.Add(flowButtons, 0, 7);
+            cardLayout.Dock = DockStyle.Fill;
+            cardLayout.Padding = new Padding(24);
+            cardLayout.RowCount = 8;
+            cardLayout.RowStyles.Add(new RowStyle());
+            cardLayout.RowStyles.Add(new RowStyle());
+            cardLayout.RowStyles.Add(new RowStyle());
+            cardLayout.RowStyles.Add(new RowStyle());
+            cardLayout.RowStyles.Add(new RowStyle());
+            cardLayout.RowStyles.Add(new RowStyle());
+            cardLayout.RowStyles.Add(new RowStyle());
+            cardLayout.RowStyles.Add(new RowStyle());
+
+            // lblTitle
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTitle.Margin = new Padding(0, 0, 0, 4);
+
+            // lblSubtitle
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            lblSubtitle.Margin = new Padding(0, 0, 0, 20);
+            lblSubtitle.Tag = "muted";
+
+            // lblLanguage
+            lblLanguage.AutoSize = true;
+            lblLanguage.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblLanguage.Margin = new Padding(0, 0, 0, 6);
+
+            // cmbLanguage
+            cmbLanguage.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cmbLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbLanguage.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            cmbLanguage.IntegralHeight = false;
+            cmbLanguage.Margin = new Padding(0, 0, 0, 16);
+
+            // lblTheme
+            lblTheme.AutoSize = true;
+            lblTheme.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTheme.Margin = new Padding(0, 12, 0, 6);
+
+            // cmbTheme
+            cmbTheme.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cmbTheme.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbTheme.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            cmbTheme.IntegralHeight = false;
+            cmbTheme.Margin = new Padding(0, 0, 0, 16);
+
+            // chkAutostart
+            chkAutostart.AutoSize = true;
+            chkAutostart.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            chkAutostart.Margin = new Padding(0, 16, 0, 0);
+
+            // flowButtons
+            flowButtons.AutoSize = true;
+            flowButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowButtons.FlowDirection = FlowDirection.RightToLeft;
+            flowButtons.Margin = new Padding(0, 24, 0, 0);
+            flowButtons.Padding = new Padding(0);
+            flowButtons.WrapContents = false;
+            flowButtons.Controls.Add(btnOK);
+            flowButtons.Controls.Add(btnCancel);
+
+            // btnOK
+            btnOK.AutoSize = true;
+            btnOK.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnOK.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnOK.Margin = new Padding(0);
+            btnOK.MinimumSize = new Size(0, 40);
+            btnOK.Tag = "accent";
+            btnOK.UseVisualStyleBackColor = false;
+            btnOK.Click += btnOK_Click;
+
+            // btnCancel
+            btnCancel.AutoSize = true;
+            btnCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            btnCancel.Margin = new Padding(12, 0, 0, 0);
+            btnCancel.MinimumSize = new Size(0, 40);
+            btnCancel.Tag = "ghost";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
+
+            // SettingsForm
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(420, 360);
+            Controls.Add(layoutRoot);
+            Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
+            Padding = new Padding(16);
             StartPosition = FormStartPosition.CenterParent;
+            AcceptButton = btnOK;
+            CancelButton = btnCancel;
 
-            // labels
-            lblLanguage.AutoSize = true;
-            lblLanguage.Left = 20; lblLanguage.Top = 20; lblLanguage.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-
-            lblTheme.AutoSize = true;
-            lblTheme.Left = 20; lblTheme.Top = 90; lblTheme.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-
-            // combos
-            cmbLanguage.Left = 20; cmbLanguage.Top = 50; cmbLanguage.Width = 220;
-            cmbLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbTheme.Left = 20; cmbTheme.Top = 120; cmbTheme.Width = 220;
-            cmbTheme.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            // checkbox
-            chkAutostart.Left = 20; chkAutostart.Top = 160; chkAutostart.Width = 260;
-
-            // buttons
-            btnOK.Left = 200; btnOK.Top = 190; btnOK.Width = 60;
-            btnOK.Click += btnOK_Click;
-
-            btnCancel.Left = 270; btnCancel.Top = 190; btnCancel.Width = 60;
-            btnCancel.Click += btnCancel_Click;
-
-            Controls.Add(lblLanguage);
-            Controls.Add(lblTheme);
-            Controls.Add(cmbLanguage);
-            Controls.Add(cmbTheme);
-            Controls.Add(chkAutostart);
-            Controls.Add(btnOK);
-            Controls.Add(btnCancel);
-
+            layoutRoot.ResumeLayout(false);
+            layoutRoot.PerformLayout();
+            panelCard.ResumeLayout(false);
+            panelCard.PerformLayout();
+            cardLayout.ResumeLayout(false);
+            cardLayout.PerformLayout();
             ResumeLayout(false);
         }
     }

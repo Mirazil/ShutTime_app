@@ -31,6 +31,12 @@ namespace ShutdownTimerApp
                 ["Cond_Idle"] = "При бездействии пользователя",
 
                 ["Caption_Time"] = "Время",
+                ["Caption_Action"] = "Действие",
+                ["Caption_Condition"] = "Условие",
+                ["Timer_Title"] = "Интеллектуальный таймер",
+                ["Timer_Subtitle"] = "Задайте действие и условие выполнения",
+                ["Settings_Title_Highlight"] = "Персонализация",
+                ["Settings_Subtitle"] = "Настройте язык, тему и автозапуск",
                 ["Btn_OK"] = "ОК",
                 ["Btn_Cancel"] = "Отмена",
                 ["Tab_Timer"] = "Таймер",
@@ -57,6 +63,12 @@ namespace ShutdownTimerApp
                 ["Cond_Idle"] = "On user idle",
 
                 ["Caption_Time"] = "Time",
+                ["Caption_Action"] = "Action",
+                ["Caption_Condition"] = "Condition",
+                ["Timer_Title"] = "Intelligent timer",
+                ["Timer_Subtitle"] = "Define what happens and when",
+                ["Settings_Title_Highlight"] = "Personalization",
+                ["Settings_Subtitle"] = "Adjust language, theme, and startup",
                 ["Btn_OK"] = "OK",
                 ["Btn_Cancel"] = "Cancel",
                 ["Tab_Timer"] = "Timer",
@@ -83,6 +95,12 @@ namespace ShutdownTimerApp
                 ["Cond_Idle"] = "За бездіяльності",
 
                 ["Caption_Time"] = "Час",
+                ["Caption_Action"] = "Дія",
+                ["Caption_Condition"] = "Умова",
+                ["Timer_Title"] = "Розумний таймер",
+                ["Timer_Subtitle"] = "Задайте дію та момент виконання",
+                ["Settings_Title_Highlight"] = "Персоналізація",
+                ["Settings_Subtitle"] = "Налаштуйте мову, тему та автозапуск",
                 ["Btn_OK"] = "ОК",
                 ["Btn_Cancel"] = "Скасувати",
                 ["Tab_Timer"] = "Таймер",
@@ -117,16 +135,21 @@ namespace ShutdownTimerApp
         public static void Apply(Form form)
         {
             bool light = IsLightTheme();
-            Color back = light ? Color.WhiteSmoke : Color.FromArgb(28, 28, 28);
-            Color panel = light ? Color.White : Color.FromArgb(40, 40, 40);
-            Color fore = light ? Color.Black : Color.White;
+            Color back = light ? Color.FromArgb(245, 246, 250) : Color.FromArgb(18, 18, 20);
+            Color surface = light ? Color.White : Color.FromArgb(32, 32, 36);
+            Color fore = light ? Color.FromArgb(23, 23, 26) : Color.WhiteSmoke;
+            Color accent = light ? Color.FromArgb(76, 110, 245) : Color.FromArgb(98, 128, 255);
+            Color accentHover = light ? Color.FromArgb(90, 124, 255) : Color.FromArgb(118, 144, 255);
+            Color mutedHover = light ? Color.FromArgb(232, 234, 243) : Color.FromArgb(48, 48, 52);
+            Color mutedPressed = light ? Color.FromArgb(218, 221, 233) : Color.FromArgb(60, 60, 66);
 
             form.BackColor = back;
             form.ForeColor = fore;
-            ApplyTo(form.Controls, panel, fore);
+            ApplyTo(form.Controls, back, surface, fore, accent, accentHover, mutedHover, mutedPressed, light);
         }
 
-        private static void ApplyTo(Control.ControlCollection controls, Color back, Color fore)
+        private static void ApplyTo(Control.ControlCollection controls, Color back, Color surface, Color fore,
+            Color accent, Color accentHover, Color mutedHover, Color mutedPressed, bool light)
         {
             foreach (Control c in controls)
             {
@@ -134,21 +157,60 @@ namespace ShutdownTimerApp
                 {
                     case Button b:
                         b.FlatStyle = FlatStyle.Flat;
-                        b.BackColor = back;
-                        b.ForeColor = fore;
+                        b.FlatAppearance.BorderSize = 0;
+                        b.FlatAppearance.MouseOverBackColor = b.Tag as string == "accent" ? accentHover : mutedHover;
+                        b.FlatAppearance.MouseDownBackColor = b.Tag as string == "accent" ? accentHover : mutedPressed;
+                        if (b.Tag as string == "accent")
+                        {
+                            b.BackColor = accent;
+                            b.ForeColor = Color.White;
+                        }
+                        else if (b.Tag as string == "ghost")
+                        {
+                            b.BackColor = Color.Transparent;
+                            b.ForeColor = fore;
+                        }
+                        else
+                        {
+                            b.BackColor = surface;
+                            b.ForeColor = fore;
+                        }
                         break;
                     case ComboBox cb:
-                        cb.BackColor = back; cb.ForeColor = fore; break;
+                        cb.BackColor = surface; cb.ForeColor = fore; cb.FlatStyle = FlatStyle.Flat; break;
                     case MaskedTextBox mtb:
-                        mtb.BackColor = back; mtb.ForeColor = fore; break;
+                        mtb.BackColor = surface; mtb.ForeColor = fore; mtb.BorderStyle = BorderStyle.FixedSingle; break;
                     case TextBox tb:
-                        tb.BackColor = back; tb.ForeColor = fore; break;
+                        tb.BackColor = surface; tb.ForeColor = fore; tb.BorderStyle = BorderStyle.FixedSingle; break;
                     case CheckBox ch:
-                        ch.BackColor = back; ch.ForeColor = fore; break;
+                        ch.BackColor = Color.Transparent; ch.ForeColor = fore; break;
                     case Label lb:
-                        lb.BackColor = back; lb.ForeColor = fore; break;
+                        lb.BackColor = Color.Transparent;
+                        lb.ForeColor = lb.Tag as string == "muted"
+                            ? (light ? Color.FromArgb(120, 123, 134) : Color.FromArgb(160, 160, 170))
+                            : fore;
+                        break;
+                    case TabControl tc:
+                        tc.BackColor = back; tc.ForeColor = fore; break;
+                    case TabPage page:
+                        page.BackColor = back; page.ForeColor = fore; break;
+                    case Panel p:
+                        if (p.Tag as string == "transparent")
+                        {
+                            p.BackColor = Color.Transparent;
+                        }
+                        else if (p.Tag as string == "accent")
+                        {
+                            p.BackColor = accent;
+                        }
+                        else
+                        {
+                            p.BackColor = surface;
+                        }
+                        p.ForeColor = fore;
+                        break;
                 }
-                if (c.HasChildren) ApplyTo(c.Controls, back, fore);
+                if (c.HasChildren) ApplyTo(c.Controls, back, surface, fore, accent, accentHover, mutedHover, mutedPressed, light);
             }
         }
     }
