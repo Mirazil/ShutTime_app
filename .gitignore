@@ -12,3 +12,6 @@ out/
 
 # Visual Studio files
 .vs/
+
+#
+publish/
