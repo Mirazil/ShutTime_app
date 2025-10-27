@@ -12,6 +12,7 @@ namespace ShutdownTimerApp
         public AppLanguage Language { get; set; } = AppLanguage.Russian;
         public AppTheme Theme { get; set; } = AppTheme.System;
         public bool RunOnStartup { get; set; } = false;
+        public bool RunMinimized { get; set; } = false;
         public bool MinimizeOnClose { get; set; } = true;
     }
 

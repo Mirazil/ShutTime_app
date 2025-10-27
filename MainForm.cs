@@ -43,7 +43,14 @@ namespace ShutdownTimerApp
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            UpdateNotifyIconVisibility();
+            if (ShouldStartMinimized())
+            {
+                HideToTray();
+            }
+            else
+            {
+                UpdateNotifyIconVisibility();
+            }
         }
 
         private void InitTimer()
@@ -67,6 +74,7 @@ namespace ShutdownTimerApp
             labelSettingsLanguage.Text = I18n.T("Language");
             labelSettingsTheme.Text = I18n.T("Theme");
             checkBoxAutostart.Text = I18n.T("RunOnStartup");
+            checkBoxRunMinimized.Text = I18n.T("RunMinimized");
             checkBoxMinimizeOnClose.Text = I18n.T("MinimizeOnClose");
             buttonApplySettings.Text = I18n.T("Btn_OK");
             UpdateTrayLocalization();
@@ -178,6 +186,8 @@ namespace ShutdownTimerApp
 
             checkBoxAutostart.Checked = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
             checkBoxMinimizeOnClose.Checked = AppConfig.Current.MinimizeOnClose;
+            checkBoxRunMinimized.Checked = AppConfig.Current.RunMinimized;
+            UpdateRunMinimizedCheckboxState();
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -321,6 +331,7 @@ namespace ShutdownTimerApp
             }
 
             AppConfig.Current.RunOnStartup = checkBoxAutostart.Checked;
+            AppConfig.Current.RunMinimized = checkBoxAutostart.Checked && checkBoxRunMinimized.Checked;
             AppConfig.Current.MinimizeOnClose = checkBoxMinimizeOnClose.Checked;
             AutoStartHelper.Set(checkBoxAutostart.Checked);
             AppConfig.Save();
@@ -328,6 +339,21 @@ namespace ShutdownTimerApp
             ApplyLocalization();
             ApplyTheme();
             UpdateNotifyIconVisibility();
+        }
+
+        private void checkBoxAutostart_CheckedChanged(object? sender, EventArgs e)
+        {
+            UpdateRunMinimizedCheckboxState();
+        }
+
+        private void UpdateRunMinimizedCheckboxState()
+        {
+            bool enabled = checkBoxAutostart.Checked;
+            checkBoxRunMinimized.Enabled = enabled;
+            if (!enabled)
+            {
+                checkBoxRunMinimized.Checked = false;
+            }
         }
 
         private void comboBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
@@ -430,6 +456,17 @@ namespace ShutdownTimerApp
         private void UpdateNotifyIconVisibility()
         {
             notifyIcon.Visible = AppConfig.Current.MinimizeOnClose || !Visible;
+        }
+
+        private bool ShouldStartMinimized()
+        {
+            if (!AppConfig.Current.RunMinimized)
+            {
+                return false;
+            }
+
+            bool autostartEnabled = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
+            return autostartEnabled;
         }
     }
 }

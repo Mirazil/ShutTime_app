@@ -31,7 +31,9 @@ namespace ShutdownTimerApp
         private ComboBox comboBoxLanguage;
         private Label labelSettingsTheme;
         private ComboBox comboBoxTheme;
+        private FlowLayoutPanel flowLayoutAutostart;
         private CheckBox checkBoxAutostart;
+        private CheckBox checkBoxRunMinimized;
         private CheckBox checkBoxMinimizeOnClose;
         private Button buttonApplySettings;
         private NotifyIcon notifyIcon;
@@ -74,7 +76,9 @@ namespace ShutdownTimerApp
             comboBoxLanguage = new ComboBox();
             labelSettingsTheme = new Label();
             comboBoxTheme = new ComboBox();
+            flowLayoutAutostart = new FlowLayoutPanel();
             checkBoxAutostart = new CheckBox();
+            checkBoxRunMinimized = new CheckBox();
             checkBoxMinimizeOnClose = new CheckBox();
             buttonApplySettings = new Button();
             notifyIcon = new NotifyIcon(components);
@@ -264,7 +268,7 @@ namespace ShutdownTimerApp
             settingsCardLayout.Controls.Add(comboBoxLanguage, 0, 3);
             settingsCardLayout.Controls.Add(labelSettingsTheme, 0, 4);
             settingsCardLayout.Controls.Add(comboBoxTheme, 0, 5);
-            settingsCardLayout.Controls.Add(checkBoxAutostart, 0, 6);
+            settingsCardLayout.Controls.Add(flowLayoutAutostart, 0, 6);
             settingsCardLayout.Controls.Add(checkBoxMinimizeOnClose, 0, 7);
             settingsCardLayout.Controls.Add(buttonApplySettings, 0, 8);
             settingsCardLayout.Dock = DockStyle.Fill;
@@ -315,10 +319,25 @@ namespace ShutdownTimerApp
             comboBoxTheme.IntegralHeight = false;
             comboBoxTheme.Margin = new Padding(0, 0, 0, 8);
 
+            // flowLayoutAutostart
+            flowLayoutAutostart.AutoSize = true;
+            flowLayoutAutostart.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutAutostart.FlowDirection = FlowDirection.LeftToRight;
+            flowLayoutAutostart.Margin = new Padding(0, 8, 0, 0);
+            flowLayoutAutostart.WrapContents = false;
+            flowLayoutAutostart.Controls.Add(checkBoxAutostart);
+            flowLayoutAutostart.Controls.Add(checkBoxRunMinimized);
+
             // checkBoxAutostart
             checkBoxAutostart.AutoSize = true;
             checkBoxAutostart.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            checkBoxAutostart.Margin = new Padding(0, 8, 0, 0);
+            checkBoxAutostart.Margin = new Padding(0, 0, 12, 0);
+            checkBoxAutostart.CheckedChanged += checkBoxAutostart_CheckedChanged;
+
+            // checkBoxRunMinimized
+            checkBoxRunMinimized.AutoSize = true;
+            checkBoxRunMinimized.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            checkBoxRunMinimized.Margin = new Padding(0);
 
             // checkBoxMinimizeOnClose
             checkBoxMinimizeOnClose.AutoSize = true;

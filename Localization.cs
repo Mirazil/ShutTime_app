@@ -20,6 +20,7 @@ namespace ShutdownTimerApp
                 ["Theme_Dark"] = "Тёмная",
                 ["Theme_System"] = "Как в системе",
                 ["RunOnStartup"] = "Запускать с Windows",
+                ["RunMinimized"] = "Запускать свёрнутым",
                 ["MinimizeOnClose"] = "Сворачивать при закрытии",
 
                 ["Action_Shutdown"] = "Выключить компьютер",
@@ -57,6 +58,7 @@ namespace ShutdownTimerApp
                 ["Theme_Dark"] = "Dark",
                 ["Theme_System"] = "System",
                 ["RunOnStartup"] = "Run at Windows startup",
+                ["RunMinimized"] = "Start minimized",
                 ["MinimizeOnClose"] = "Minimize to tray on close",
 
                 ["Action_Shutdown"] = "Shut down",
@@ -94,6 +96,7 @@ namespace ShutdownTimerApp
                 ["Theme_Dark"] = "Темна",
                 ["Theme_System"] = "Як у системі",
                 ["RunOnStartup"] = "Запускати з Windows",
+                ["RunMinimized"] = "Запускати згорнутим",
                 ["MinimizeOnClose"] = "Згортати під час закриття",
 
                 ["Action_Shutdown"] = "Вимкнути комп'ютер",
