@@ -43,6 +43,7 @@ dotnet run
 1. Дополните `AppLanguage` в `AppConfig.cs`.
 2. Добавьте словарь переводов в `Localization.cs`.
 3. Обновите наполнение списков в `MainForm.PopulateSettingsLists()` и `SettingsForm.ApplyLocalization()` (если окно используется).
+4. Сделайте pull request.
 
 Для изменения оформления поправьте палитру в `ThemeHelper.Apply()` внутри `Localization.cs`.
 
