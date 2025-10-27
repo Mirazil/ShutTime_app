@@ -66,8 +66,8 @@ namespace ShutdownTimerApp
             panelCard.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelCard.Controls.Add(cardLayout);
             panelCard.Margin = new Padding(0);
-            panelCard.MaximumSize = new Size(520, 0);
-            panelCard.Tag = "card";
+            panelCard.MaximumSize = new Size(0, 0);
+            panelCard.Tag = "transparent";
 
             // cardLayout
             cardLayout.AutoSize = true;
@@ -83,7 +83,7 @@ namespace ShutdownTimerApp
             cardLayout.Controls.Add(chkAutostart, 0, 6);
             cardLayout.Controls.Add(flowButtons, 0, 7);
             cardLayout.Dock = DockStyle.Fill;
-            cardLayout.Padding = new Padding(24);
+            cardLayout.Padding = new Padding(8);
             cardLayout.RowCount = 8;
             cardLayout.RowStyles.Add(new RowStyle());
             cardLayout.RowStyles.Add(new RowStyle());
@@ -97,48 +97,48 @@ namespace ShutdownTimerApp
             // lblTitle
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTitle.Margin = new Padding(0, 0, 0, 4);
+            lblTitle.Margin = new Padding(0, 0, 0, 2);
 
             // lblSubtitle
             lblSubtitle.AutoSize = true;
             lblSubtitle.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            lblSubtitle.Margin = new Padding(0, 0, 0, 20);
+            lblSubtitle.Margin = new Padding(0, 0, 0, 10);
             lblSubtitle.Tag = "muted";
 
             // lblLanguage
             lblLanguage.AutoSize = true;
             lblLanguage.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblLanguage.Margin = new Padding(0, 0, 0, 6);
+            lblLanguage.Margin = new Padding(0, 0, 0, 4);
 
             // cmbLanguage
             cmbLanguage.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cmbLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbLanguage.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cmbLanguage.IntegralHeight = false;
-            cmbLanguage.Margin = new Padding(0, 0, 0, 16);
+            cmbLanguage.Margin = new Padding(0, 0, 0, 8);
 
             // lblTheme
             lblTheme.AutoSize = true;
             lblTheme.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTheme.Margin = new Padding(0, 12, 0, 6);
+            lblTheme.Margin = new Padding(0, 8, 0, 4);
 
             // cmbTheme
             cmbTheme.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cmbTheme.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTheme.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cmbTheme.IntegralHeight = false;
-            cmbTheme.Margin = new Padding(0, 0, 0, 16);
+            cmbTheme.Margin = new Padding(0, 0, 0, 8);
 
             // chkAutostart
             chkAutostart.AutoSize = true;
             chkAutostart.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            chkAutostart.Margin = new Padding(0, 16, 0, 0);
+            chkAutostart.Margin = new Padding(0, 10, 0, 0);
 
             // flowButtons
             flowButtons.AutoSize = true;
             flowButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowButtons.FlowDirection = FlowDirection.RightToLeft;
-            flowButtons.Margin = new Padding(0, 24, 0, 0);
+            flowButtons.Margin = new Padding(0, 12, 0, 0);
             flowButtons.Padding = new Padding(0);
             flowButtons.WrapContents = false;
             flowButtons.Controls.Add(btnOK);
@@ -158,7 +158,7 @@ namespace ShutdownTimerApp
             btnCancel.AutoSize = true;
             btnCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            btnCancel.Margin = new Padding(12, 0, 0, 0);
+            btnCancel.Margin = new Padding(8, 0, 0, 0);
             btnCancel.MinimumSize = new Size(0, 40);
             btnCancel.Tag = "ghost";
             btnCancel.UseVisualStyleBackColor = false;
@@ -173,7 +173,7 @@ namespace ShutdownTimerApp
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            Padding = new Padding(16);
+            Padding = new Padding(8);
             StartPosition = FormStartPosition.CenterParent;
             AcceptButton = btnOK;
             CancelButton = btnCancel;

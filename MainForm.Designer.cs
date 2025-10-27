@@ -88,16 +88,16 @@ namespace ShutdownTimerApp
             tabControlMain.Controls.Add(tabPageSettings);
             tabControlMain.Dock = DockStyle.Fill;
             tabControlMain.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            tabControlMain.ItemSize = new Size(120, 38);
+            tabControlMain.ItemSize = new Size(80, 32);
             tabControlMain.Margin = new Padding(0);
-            tabControlMain.Padding = new Point(24, 8);
-            tabControlMain.SizeMode = TabSizeMode.Fixed;
+            tabControlMain.Padding = new Point(0, 0);
+            tabControlMain.SizeMode = TabSizeMode.Normal;
 
             // tabPageTimer
             tabPageTimer.Controls.Add(layoutTimer);
             tabPageTimer.Location = new Point(4, 46);
             tabPageTimer.Margin = new Padding(0);
-            tabPageTimer.Padding = new Padding(24);
+            tabPageTimer.Padding = new Padding(8);
             tabPageTimer.UseVisualStyleBackColor = false;
 
             // layoutTimer
@@ -117,8 +117,8 @@ namespace ShutdownTimerApp
             panelTimerCard.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelTimerCard.Controls.Add(timerCardLayout);
             panelTimerCard.Margin = new Padding(0);
-            panelTimerCard.MaximumSize = new Size(520, 0);
-            panelTimerCard.Tag = "card";
+            panelTimerCard.MaximumSize = new Size(0, 0);
+            panelTimerCard.Tag = "transparent";
 
             // timerCardLayout
             timerCardLayout.AutoSize = true;
@@ -136,7 +136,7 @@ namespace ShutdownTimerApp
             timerCardLayout.Controls.Add(maskedTextBoxTime, 0, 8);
             timerCardLayout.Controls.Add(buttonStart, 0, 9);
             timerCardLayout.Dock = DockStyle.Fill;
-            timerCardLayout.Padding = new Padding(24, 24, 24, 16);
+            timerCardLayout.Padding = new Padding(8);
             timerCardLayout.RowCount = 10;
             timerCardLayout.RowStyles.Add(new RowStyle());
             timerCardLayout.RowStyles.Add(new RowStyle());
@@ -152,18 +152,18 @@ namespace ShutdownTimerApp
             // labelTimerTitle
             labelTimerTitle.AutoSize = true;
             labelTimerTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            labelTimerTitle.Margin = new Padding(0, 0, 0, 4);
+            labelTimerTitle.Margin = new Padding(0, 0, 0, 2);
 
             // labelTimerSubtitle
             labelTimerSubtitle.AutoSize = true;
             labelTimerSubtitle.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTimerSubtitle.Margin = new Padding(0, 0, 0, 12);
+            labelTimerSubtitle.Margin = new Padding(0, 0, 0, 6);
             labelTimerSubtitle.Tag = "muted";
 
             // labelCountdown
             labelCountdown.Dock = DockStyle.Fill;
             labelCountdown.Font = new Font("Segoe UI Semibold", 42F, FontStyle.Bold, GraphicsUnit.Point);
-            labelCountdown.Margin = new Padding(0, 4, 0, 16);
+            labelCountdown.Margin = new Padding(0, 4, 0, 8);
             labelCountdown.MinimumSize = new Size(0, 120);
             labelCountdown.Text = "00:00:00";
             labelCountdown.TextAlign = ContentAlignment.MiddleCenter;
@@ -171,46 +171,46 @@ namespace ShutdownTimerApp
             // labelActionCaption
             labelActionCaption.AutoSize = true;
             labelActionCaption.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            labelActionCaption.Margin = new Padding(0, 0, 0, 6);
+            labelActionCaption.Margin = new Padding(0, 0, 0, 4);
 
             // comboBoxAction
             comboBoxAction.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBoxAction.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxAction.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAction.IntegralHeight = false;
-            comboBoxAction.Margin = new Padding(0, 0, 0, 12);
+            comboBoxAction.Margin = new Padding(0, 0, 0, 6);
 
             // labelConditionCaption
             labelConditionCaption.AutoSize = true;
             labelConditionCaption.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            labelConditionCaption.Margin = new Padding(0, 0, 0, 6);
+            labelConditionCaption.Margin = new Padding(0, 0, 0, 4);
 
             // comboBoxCondition
             comboBoxCondition.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBoxCondition.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxCondition.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxCondition.IntegralHeight = false;
-            comboBoxCondition.Margin = new Padding(0, 0, 0, 12);
+            comboBoxCondition.Margin = new Padding(0, 0, 0, 6);
             comboBoxCondition.SelectedIndexChanged += comboBoxCondition_SelectedIndexChanged;
 
             // labelTimeCaption
             labelTimeCaption.AutoSize = true;
             labelTimeCaption.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            labelTimeCaption.Margin = new Padding(0, 6, 0, 6);
+            labelTimeCaption.Margin = new Padding(0, 4, 0, 4);
 
             // maskedTextBoxTime
             maskedTextBoxTime.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             maskedTextBoxTime.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             maskedTextBoxTime.Mask = "00:00:00";
-            maskedTextBoxTime.Margin = new Padding(0, 0, 0, 16);
+            maskedTextBoxTime.Margin = new Padding(0, 0, 0, 8);
             maskedTextBoxTime.Text = "004500";
             maskedTextBoxTime.TextAlign = HorizontalAlignment.Center;
 
             // buttonStart
             buttonStart.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             buttonStart.Font = new Font("Segoe UI Symbol", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonStart.Margin = new Padding(0, 8, 0, 0);
-            buttonStart.MinimumSize = new Size(0, 52);
+            buttonStart.Margin = new Padding(0, 6, 0, 0);
+            buttonStart.MinimumSize = new Size(0, 44);
             buttonStart.Tag = "accent";
             buttonStart.Text = "▶";
             buttonStart.UseVisualStyleBackColor = false;
@@ -220,7 +220,7 @@ namespace ShutdownTimerApp
             tabPageSettings.Controls.Add(layoutSettings);
             tabPageSettings.Location = new Point(4, 46);
             tabPageSettings.Margin = new Padding(0);
-            tabPageSettings.Padding = new Padding(24);
+            tabPageSettings.Padding = new Padding(8);
             tabPageSettings.UseVisualStyleBackColor = false;
 
             // layoutSettings
@@ -240,8 +240,8 @@ namespace ShutdownTimerApp
             panelSettingsCard.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelSettingsCard.Controls.Add(settingsCardLayout);
             panelSettingsCard.Margin = new Padding(0);
-            panelSettingsCard.MaximumSize = new Size(520, 0);
-            panelSettingsCard.Tag = "card";
+            panelSettingsCard.MaximumSize = new Size(0, 0);
+            panelSettingsCard.Tag = "transparent";
 
             // settingsCardLayout
             settingsCardLayout.AutoSize = true;
@@ -257,7 +257,7 @@ namespace ShutdownTimerApp
             settingsCardLayout.Controls.Add(checkBoxAutostart, 0, 6);
             settingsCardLayout.Controls.Add(buttonApplySettings, 0, 7);
             settingsCardLayout.Dock = DockStyle.Fill;
-            settingsCardLayout.Padding = new Padding(24);
+            settingsCardLayout.Padding = new Padding(8);
             settingsCardLayout.RowCount = 8;
             settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
@@ -271,48 +271,48 @@ namespace ShutdownTimerApp
             // labelSettingsTitle
             labelSettingsTitle.AutoSize = true;
             labelSettingsTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            labelSettingsTitle.Margin = new Padding(0, 0, 0, 4);
+            labelSettingsTitle.Margin = new Padding(0, 0, 0, 2);
 
             // labelSettingsSubtitle
             labelSettingsSubtitle.AutoSize = true;
             labelSettingsSubtitle.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            labelSettingsSubtitle.Margin = new Padding(0, 0, 0, 20);
+            labelSettingsSubtitle.Margin = new Padding(0, 0, 0, 10);
             labelSettingsSubtitle.Tag = "muted";
 
             // labelSettingsLanguage
             labelSettingsLanguage.AutoSize = true;
             labelSettingsLanguage.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            labelSettingsLanguage.Margin = new Padding(0, 4, 0, 6);
+            labelSettingsLanguage.Margin = new Padding(0, 4, 0, 4);
 
             // comboBoxLanguage
             comboBoxLanguage.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBoxLanguage.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxLanguage.IntegralHeight = false;
-            comboBoxLanguage.Margin = new Padding(0, 0, 0, 16);
+            comboBoxLanguage.Margin = new Padding(0, 0, 0, 8);
 
             // labelSettingsTheme
             labelSettingsTheme.AutoSize = true;
             labelSettingsTheme.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            labelSettingsTheme.Margin = new Padding(0, 12, 0, 6);
+            labelSettingsTheme.Margin = new Padding(0, 8, 0, 4);
 
             // comboBoxTheme
             comboBoxTheme.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBoxTheme.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxTheme.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxTheme.IntegralHeight = false;
-            comboBoxTheme.Margin = new Padding(0, 0, 0, 16);
+            comboBoxTheme.Margin = new Padding(0, 0, 0, 8);
 
             // checkBoxAutostart
             checkBoxAutostart.AutoSize = true;
             checkBoxAutostart.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            checkBoxAutostart.Margin = new Padding(0, 12, 0, 0);
+            checkBoxAutostart.Margin = new Padding(0, 8, 0, 0);
 
             // buttonApplySettings
             buttonApplySettings.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             buttonApplySettings.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonApplySettings.Margin = new Padding(0, 24, 0, 0);
-            buttonApplySettings.MinimumSize = new Size(0, 44);
+            buttonApplySettings.Margin = new Padding(0, 12, 0, 0);
+            buttonApplySettings.MinimumSize = new Size(0, 40);
             buttonApplySettings.Tag = "accent";
             buttonApplySettings.UseVisualStyleBackColor = false;
             buttonApplySettings.Click += buttonApplySettings_Click;
@@ -326,7 +326,7 @@ namespace ShutdownTimerApp
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimumSize = new Size(480, 560);
-            Padding = new Padding(16);
+            Padding = new Padding(8);
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ShutTime 1.0";
 
