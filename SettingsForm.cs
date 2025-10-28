@@ -44,6 +44,9 @@ namespace ShutdownTimerApp
                 new(){ Text = I18n.T("Theme_Light"), Value = AppTheme.Light },
                 new(){ Text = I18n.T("Theme_Dark"),  Value = AppTheme.Dark  },
                 new(){ Text = I18n.T("Theme_System"),Value = AppTheme.System},
+                new(){ Text = I18n.T("Theme_Forest"), Value = AppTheme.Forest },
+                new(){ Text = I18n.T("Theme_Sunset"), Value = AppTheme.Sunset },
+                new(){ Text = I18n.T("Theme_Ocean"),  Value = AppTheme.Ocean  },
             };
         }
 

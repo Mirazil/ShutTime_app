@@ -152,6 +152,9 @@ namespace ShutdownTimerApp
                 new OptionItem<AppTheme>(I18n.T("Theme_Light"), AppTheme.Light),
                 new OptionItem<AppTheme>(I18n.T("Theme_Dark"), AppTheme.Dark),
                 new OptionItem<AppTheme>(I18n.T("Theme_System"), AppTheme.System),
+                new OptionItem<AppTheme>(I18n.T("Theme_Forest"), AppTheme.Forest),
+                new OptionItem<AppTheme>(I18n.T("Theme_Sunset"), AppTheme.Sunset),
+                new OptionItem<AppTheme>(I18n.T("Theme_Ocean"), AppTheme.Ocean),
             });
 
             if (selectedLanguage != null)
