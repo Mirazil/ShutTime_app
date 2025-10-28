@@ -5,7 +5,15 @@ using System.Text.Json;
 namespace ShutdownTimerApp
 {
     public enum AppLanguage { Russian, English, Ukrainian }
-    public enum AppTheme { Light, Dark, System }
+    public enum AppTheme
+    {
+        Light,
+        Dark,
+        System,
+        Forest,
+        Sunset,
+        Ocean
+    }
 
     public class AppSettings
     {
