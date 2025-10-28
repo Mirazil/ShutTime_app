@@ -239,13 +239,13 @@ namespace ShutdownTimerApp
             switch (comboBoxAction.SelectedIndex)
             {
                 case 0: // Shutdown
-                    Process.Start("shutdown", "/s /t 0");
+                    Process.Start("shutdown.exe", "/s /t 0");
                     break;
                 case 1: // Sleep
                     Application.SetSuspendState(PowerState.Suspend, true, true);
                     break;
                 case 2: // Restart
-                    Process.Start("shutdown", "/r /t 0");
+                    Process.Start("shutdown.exe", "/r /t 0");
                     break;
                 case 3: // Lock
                     LockWorkStation();
