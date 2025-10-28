@@ -13,5 +13,8 @@ out/
 # Visual Studio files
 .vs/
 
-#
+# Готовые файлы
 publish/
+
+# Инсталятор
+*.iss
