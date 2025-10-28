@@ -51,13 +51,25 @@ namespace ShutdownTimerApp
         {
             // язык
             for (int i = 0; i < cmbLanguage.Items.Count; i++)
-                if (((OptionItem<AppLanguage>)cmbLanguage.Items[i]).Value == AppConfig.Current.Language)
+            {
+                if (cmbLanguage.Items[i] is OptionItem<AppLanguage> item &&
+                    item.Value == AppConfig.Current.Language)
+                {
                     cmbLanguage.SelectedIndex = i;
+                    break;
+                }
+            }
 
             // тема
             for (int i = 0; i < cmbTheme.Items.Count; i++)
-                if (((OptionItem<AppTheme>)cmbTheme.Items[i]).Value == AppConfig.Current.Theme)
+            {
+                if (cmbTheme.Items[i] is OptionItem<AppTheme> item &&
+                    item.Value == AppConfig.Current.Theme)
+                {
                     cmbTheme.SelectedIndex = i;
+                    break;
+                }
+            }
 
             chkAutostart.Checked = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
             chkMinimizeOnClose.Checked = AppConfig.Current.MinimizeOnClose;

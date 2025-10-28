@@ -21,7 +21,11 @@ namespace ShutdownTimerApp
             public override string ToString() => Text;
         }
 
-        private System.Windows.Forms.Timer timer;
+        private const string PlaySymbol = "\u25B6";
+        private const string PauseSymbol = "\u23F8";
+        private const string DefaultTimerValue = "004500";
+
+        private readonly System.Windows.Forms.Timer timer;
         private TimeSpan remainingTime;
         private bool isRunning = false;
         private bool idleMode = false; // режим «при бездействии»
@@ -31,7 +35,10 @@ namespace ShutdownTimerApp
         {
             AppConfig.Load();
             InitializeComponent();
-            InitTimer();
+
+            timer = new System.Windows.Forms.Timer { Interval = 1000 };
+            timer.Tick += Timer_Tick;
+
             ApplyLocalization();
             ApplyTheme();
             SetupUI();
@@ -57,12 +64,6 @@ namespace ShutdownTimerApp
             {
                 UpdateNotifyIconVisibility();
             }
-        }
-
-        private void InitTimer()
-        {
-            timer = new System.Windows.Forms.Timer { Interval = 1000 };
-            timer.Tick += Timer_Tick;
         }
 
         private void ApplyLocalization()
@@ -120,8 +121,8 @@ namespace ShutdownTimerApp
         private void SetupUI()
         {
             labelCountdown.Text = "00:00:00";
-            maskedTextBoxTime.Text = "004500"; // 00:45:00
-            buttonStart.Text = "▶";
+            maskedTextBoxTime.Text = DefaultTimerValue; // 00:45:00
+            buttonStart.Text = PlaySymbol;
         }
 
         private void PopulateSettingsLists()
@@ -149,7 +150,8 @@ namespace ShutdownTimerApp
             {
                 for (int i = 0; i < comboBoxLanguage.Items.Count; i++)
                 {
-                    if (((OptionItem<AppLanguage>)comboBoxLanguage.Items[i]).Value.Equals(selectedLanguage.Value))
+                    if (comboBoxLanguage.Items[i] is OptionItem<AppLanguage> item &&
+                        item.Value.Equals(selectedLanguage.Value))
                     {
                         comboBoxLanguage.SelectedIndex = i;
                         break;
@@ -161,7 +163,8 @@ namespace ShutdownTimerApp
             {
                 for (int i = 0; i < comboBoxTheme.Items.Count; i++)
                 {
-                    if (((OptionItem<AppTheme>)comboBoxTheme.Items[i]).Value.Equals(selectedTheme.Value))
+                    if (comboBoxTheme.Items[i] is OptionItem<AppTheme> item &&
+                        item.Value.Equals(selectedTheme.Value))
                     {
                         comboBoxTheme.SelectedIndex = i;
                         break;
@@ -174,7 +177,8 @@ namespace ShutdownTimerApp
         {
             for (int i = 0; i < comboBoxLanguage.Items.Count; i++)
             {
-                if (((OptionItem<AppLanguage>)comboBoxLanguage.Items[i]).Value == AppConfig.Current.Language)
+                if (comboBoxLanguage.Items[i] is OptionItem<AppLanguage> item &&
+                    item.Value == AppConfig.Current.Language)
                 {
                     comboBoxLanguage.SelectedIndex = i;
                     break;
@@ -183,7 +187,8 @@ namespace ShutdownTimerApp
 
             for (int i = 0; i < comboBoxTheme.Items.Count; i++)
             {
-                if (((OptionItem<AppTheme>)comboBoxTheme.Items[i]).Value == AppConfig.Current.Theme)
+                if (comboBoxTheme.Items[i] is OptionItem<AppTheme> item &&
+                    item.Value == AppConfig.Current.Theme)
                 {
                     comboBoxTheme.SelectedIndex = i;
                     break;
@@ -231,26 +236,47 @@ namespace ShutdownTimerApp
         {
             timer.Stop();
             isRunning = false;
-            buttonStart.Text = "▶";
+            idleMode = false;
+            buttonStart.Text = PlaySymbol;
         }
 
         private void ExecuteAction()
         {
-            switch (comboBoxAction.SelectedIndex)
+            try
             {
-                case 0: // Shutdown
-                    Process.Start("shutdown.exe", "/s /t 0");
-                    break;
-                case 1: // Sleep
-                    Application.SetSuspendState(PowerState.Suspend, true, true);
-                    break;
-                case 2: // Restart
-                    Process.Start("shutdown.exe", "/r /t 0");
-                    break;
-                case 3: // Lock
-                    LockWorkStation();
-                    break;
+                switch (comboBoxAction.SelectedIndex)
+                {
+                    case 0:
+                        StartShutdownCommand("/s /t 0");
+                        break;
+                    case 1:
+                        Application.SetSuspendState(PowerState.Suspend, true, true);
+                        break;
+                    case 2:
+                        StartShutdownCommand("/r /t 0");
+                        break;
+                    case 3:
+                        LockWorkStation();
+                        break;
+                    default:
+                        return;
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private static void StartShutdownCommand(string arguments)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "shutdown.exe",
+                Arguments = arguments,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            });
         }
 
         [DllImport("user32.dll")] public static extern bool LockWorkStation();
@@ -268,20 +294,47 @@ namespace ShutdownTimerApp
         private static TimeSpan GetIdleTime()
         {
             LASTINPUTINFO lii = new() { cbSize = (uint)Marshal.SizeOf(typeof(LASTINPUTINFO)) };
-            GetLastInputInfo(ref lii);
-            uint idleMs = (uint)Environment.TickCount - lii.dwTime;
+            if (!GetLastInputInfo(ref lii))
+            {
+                return TimeSpan.Zero;
+            }
+
+            uint tickCount = unchecked((uint)Environment.TickCount);
+            uint idleMs = unchecked(tickCount - lii.dwTime);
             return TimeSpan.FromMilliseconds(idleMs);
         }
 
         private static TimeSpan ParseTime(string maskedText)
         {
-            // maskedText like "hhmmss" or "hh:mm:ss" — разберём оба случая
-            var t = maskedText.Replace(":", "");
-            if (t.Length != 6) t = "000000";
-            int hh = int.Parse(t.Substring(0, 2));
-            int mm = int.Parse(t.Substring(2, 2));
-            int ss = int.Parse(t.Substring(4, 2));
-            return new TimeSpan(hh, mm, ss);
+            // Extract digits from masked input; pad missing positions with zeros.
+            Span<char> digits = stackalloc char[6];
+            int length = 0;
+
+            foreach (char ch in maskedText)
+            {
+                if (char.IsDigit(ch) && length < digits.Length)
+                {
+                    digits[length++] = ch;
+                }
+            }
+
+            for (; length < digits.Length; length++)
+            {
+                digits[length] = '0';
+            }
+
+            int hours = ParseComponent(digits, 0);
+            int minutes = ParseComponent(digits, 2);
+            int seconds = ParseComponent(digits, 4);
+
+            hours = Math.Clamp(hours, 0, 23);
+            minutes = Math.Clamp(minutes, 0, 59);
+            seconds = Math.Clamp(seconds, 0, 59);
+
+            return new TimeSpan(hours, minutes, seconds);
+
+            static int ParseComponent(ReadOnlySpan<char> source, int start) =>
+                int.TryParse(source.Slice(start, 2), out var value) ? value : 0;
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -292,7 +345,7 @@ namespace ShutdownTimerApp
                 if (idleMode)
                 {
                     // таймер просто будет отслеживать бездействие
-                    buttonStart.Text = "⏸";
+                    buttonStart.Text = PauseSymbol;
                     isRunning = true;
                     timer.Start();
                     return;
@@ -316,7 +369,7 @@ namespace ShutdownTimerApp
                 labelCountdown.Text = remainingTime.ToString(@"hh\:mm\:ss");
                 timer.Start();
                 isRunning = true;
-                buttonStart.Text = "⏸";
+                buttonStart.Text = PauseSymbol;
             }
             else
             {
@@ -368,7 +421,7 @@ namespace ShutdownTimerApp
             // Для удобства сбросим поле на 00:45:00
             if (!isRunning)
             {
-                maskedTextBoxTime.Text = "004500";
+                maskedTextBoxTime.Text = DefaultTimerValue;
             }
         }
 
@@ -405,6 +458,7 @@ namespace ShutdownTimerApp
 
         private void MainForm_FormClosed(object? sender, FormClosedEventArgs e)
         {
+            timer.Dispose();
             notifyIcon.Dispose();
         }
 

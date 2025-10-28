@@ -152,6 +152,7 @@ namespace ShutdownTimerApp
             timerCardLayout.Dock = DockStyle.Fill;
             timerCardLayout.Padding = new Padding(8);
             timerCardLayout.RowCount = 10;
+            timerCardLayout.Tag = "transparent";
             timerCardLayout.RowStyles.Add(new RowStyle());
             timerCardLayout.RowStyles.Add(new RowStyle());
             timerCardLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 120F));
@@ -226,7 +227,7 @@ namespace ShutdownTimerApp
             buttonStart.Margin = new Padding(0, 6, 0, 0);
             buttonStart.MinimumSize = new Size(0, 44);
             buttonStart.Tag = "accent";
-            buttonStart.Text = "▶";
+            buttonStart.Text = "";
             buttonStart.UseVisualStyleBackColor = false;
             buttonStart.Click += buttonStart_Click;
 
@@ -274,6 +275,7 @@ namespace ShutdownTimerApp
             settingsCardLayout.Dock = DockStyle.Fill;
             settingsCardLayout.Padding = new Padding(8);
             settingsCardLayout.RowCount = 9;
+            settingsCardLayout.Tag = "transparent";
             settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
@@ -324,6 +326,7 @@ namespace ShutdownTimerApp
             flowLayoutAutostart.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowLayoutAutostart.FlowDirection = FlowDirection.LeftToRight;
             flowLayoutAutostart.Margin = new Padding(0, 8, 0, 0);
+            flowLayoutAutostart.Tag = "transparent";
             flowLayoutAutostart.WrapContents = false;
             flowLayoutAutostart.Controls.Add(checkBoxAutostart);
             flowLayoutAutostart.Controls.Add(checkBoxRunMinimized);
