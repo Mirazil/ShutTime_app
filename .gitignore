@@ -18,3 +18,4 @@ publish/
 
 # Инсталятор
 *.iss
+installer/
