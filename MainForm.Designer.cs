@@ -36,6 +36,7 @@ namespace ShutdownTimerApp
         private CheckBox checkBoxRunMinimized;
         private CheckBox checkBoxMinimizeOnClose;
         private Button buttonApplySettings;
+        private Label labelSettingsMadeBy;
         private NotifyIcon notifyIcon;
         private ContextMenuStrip trayMenu;
         private ToolStripMenuItem trayMenuShow;
@@ -81,6 +82,7 @@ namespace ShutdownTimerApp
             checkBoxRunMinimized = new CheckBox();
             checkBoxMinimizeOnClose = new CheckBox();
             buttonApplySettings = new Button();
+            labelSettingsMadeBy = new Label();
             notifyIcon = new NotifyIcon(components);
             trayMenu = new ContextMenuStrip(components);
             trayMenuShow = new ToolStripMenuItem();
@@ -106,6 +108,7 @@ namespace ShutdownTimerApp
             tabControlMain.Margin = new Padding(0);
             tabControlMain.Padding = new Point(0, 0);
             tabControlMain.SizeMode = TabSizeMode.Normal;
+            tabControlMain.SelectedIndexChanged += tabControlMain_SelectedIndexChanged;
 
             // tabPageTimer
             tabPageTimer.Controls.Add(layoutTimer);
@@ -272,10 +275,12 @@ namespace ShutdownTimerApp
             settingsCardLayout.Controls.Add(flowLayoutAutostart, 0, 6);
             settingsCardLayout.Controls.Add(checkBoxMinimizeOnClose, 0, 7);
             settingsCardLayout.Controls.Add(buttonApplySettings, 0, 8);
+            settingsCardLayout.Controls.Add(labelSettingsMadeBy, 0, 9);
             settingsCardLayout.Dock = DockStyle.Fill;
             settingsCardLayout.Padding = new Padding(8);
-            settingsCardLayout.RowCount = 9;
+            settingsCardLayout.RowCount = 10;
             settingsCardLayout.Tag = "transparent";
+            settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
             settingsCardLayout.RowStyles.Add(new RowStyle());
@@ -356,6 +361,13 @@ namespace ShutdownTimerApp
             buttonApplySettings.UseVisualStyleBackColor = false;
             buttonApplySettings.Click += buttonApplySettings_Click;
 
+            // labelSettingsMadeBy
+            labelSettingsMadeBy.AutoSize = true;
+            labelSettingsMadeBy.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point);
+            labelSettingsMadeBy.Margin = new Padding(0, 12, 0, 0);
+            labelSettingsMadeBy.Tag = "muted";
+            labelSettingsMadeBy.Text = "Made by ksoChibi";
+
             // trayMenu
             trayMenu.ImageScalingSize = new Size(24, 24);
             trayMenu.Items.AddRange(new ToolStripItem[] { trayMenuShow, trayMenuExit });
@@ -388,7 +400,7 @@ namespace ShutdownTimerApp
             Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            MinimumSize = new Size(480, 560);
+            MinimumSize = new Size(480, 0);
             Padding = new Padding(8);
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ShutTime 1.0";

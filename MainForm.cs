@@ -56,6 +56,7 @@ namespace ShutdownTimerApp
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+            AdjustWindowSize();
             if (ShouldStartMinimized())
             {
                 HideToTray();
@@ -64,6 +65,12 @@ namespace ShutdownTimerApp
             {
                 UpdateNotifyIconVisibility();
             }
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            AdjustWindowSize();
         }
 
         private void ApplyLocalization()
@@ -89,6 +96,7 @@ namespace ShutdownTimerApp
             RefillConditionItems();
             PopulateSettingsLists();
             LoadSettingsValues();
+            AdjustWindowSize();
         }
 
         private void RefillActionItems()
@@ -398,6 +406,7 @@ namespace ShutdownTimerApp
             ApplyLocalization();
             ApplyTheme();
             UpdateNotifyIconVisibility();
+            AdjustWindowSize();
         }
 
         private void checkBoxAutostart_CheckedChanged(object? sender, EventArgs e)
@@ -527,6 +536,53 @@ namespace ShutdownTimerApp
 
             bool autostartEnabled = AppConfig.Current.RunOnStartup || AutoStartHelper.IsEnabled();
             return autostartEnabled;
+        }
+
+        private void tabControlMain_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            AdjustWindowSize();
+        }
+
+        private void AdjustWindowSize()
+        {
+            var page = tabControlMain.SelectedTab;
+            if (page == null) return;
+
+            int chrome = Height - ClientSize.Height;
+            int headerHeight = tabControlMain.DisplayRectangle.Top;
+            int contentHeight = MeasureTabPageContentHeight(page);
+            int desiredHeight = headerHeight + contentHeight + chrome + Padding.Vertical;
+            if (desiredHeight <= 0) return;
+
+            if (Height != desiredHeight)
+            {
+                Height = desiredHeight;
+            }
+
+            MinimumSize = new Size(Width, desiredHeight);
+        }
+
+        private int MeasureTabPageContentHeight(TabPage page)
+        {
+            int availableWidth = page.ClientSize.Width;
+            if (availableWidth <= 0)
+            {
+                availableWidth = tabControlMain.ClientSize.Width;
+            }
+
+            int maxChildHeight = 0;
+            foreach (Control child in page.Controls)
+            {
+                if (!child.Visible) continue;
+
+                int widthForChild = Math.Max(availableWidth - child.Margin.Horizontal, 0);
+                Size preferred = child.GetPreferredSize(new Size(widthForChild, 0));
+                int childHeight = preferred.Height > 0 ? preferred.Height : child.Height;
+                childHeight += child.Margin.Vertical;
+                maxChildHeight = Math.Max(maxChildHeight, childHeight);
+            }
+
+            return page.Padding.Vertical + maxChildHeight;
         }
     }
 }
