@@ -21,7 +21,10 @@ namespace ShutdownTimerApp
         private ComboBox comboBoxCondition;
         private Label labelTimeCaption;
         private MaskedTextBox maskedTextBoxTime;
+        private TableLayoutPanel timerButtonsLayout;
         private Button buttonStart;
+        private Button buttonStop;
+        private Button buttonPause;
         private TableLayoutPanel layoutSettings;
         private Panel panelSettingsCard;
         private TableLayoutPanel settingsCardLayout;
@@ -67,7 +70,10 @@ namespace ShutdownTimerApp
             comboBoxCondition = new ComboBox();
             labelTimeCaption = new Label();
             maskedTextBoxTime = new MaskedTextBox();
+            timerButtonsLayout = new TableLayoutPanel();
             buttonStart = new Button();
+            buttonStop = new Button();
+            buttonPause = new Button();
             layoutSettings = new TableLayoutPanel();
             panelSettingsCard = new Panel();
             settingsCardLayout = new TableLayoutPanel();
@@ -151,7 +157,7 @@ namespace ShutdownTimerApp
             timerCardLayout.Controls.Add(comboBoxCondition, 0, 6);
             timerCardLayout.Controls.Add(labelTimeCaption, 0, 7);
             timerCardLayout.Controls.Add(maskedTextBoxTime, 0, 8);
-            timerCardLayout.Controls.Add(buttonStart, 0, 9);
+            timerCardLayout.Controls.Add(timerButtonsLayout, 0, 9);
             timerCardLayout.Dock = DockStyle.Fill;
             timerCardLayout.Padding = new Padding(8);
             timerCardLayout.RowCount = 10;
@@ -224,15 +230,51 @@ namespace ShutdownTimerApp
             maskedTextBoxTime.Text = "004500";
             maskedTextBoxTime.TextAlign = HorizontalAlignment.Center;
 
+            // timerButtonsLayout
+            timerButtonsLayout.AutoSize = true;
+            timerButtonsLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            timerButtonsLayout.ColumnCount = 3;
+            timerButtonsLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            timerButtonsLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            timerButtonsLayout.ColumnStyles.Add(new ColumnStyle());
+            timerButtonsLayout.Controls.Add(buttonStart, 0, 0);
+            timerButtonsLayout.Controls.Add(buttonStop, 1, 0);
+            timerButtonsLayout.Controls.Add(buttonPause, 2, 0);
+            timerButtonsLayout.Dock = DockStyle.Fill;
+            timerButtonsLayout.Margin = new Padding(0);
+
             // buttonStart
-            buttonStart.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            buttonStart.Dock = DockStyle.Fill;
             buttonStart.Font = new Font("Segoe UI Symbol", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonStart.Margin = new Padding(0, 6, 0, 0);
+            buttonStart.Margin = new Padding(0, 6, 6, 0);
             buttonStart.MinimumSize = new Size(0, 44);
             buttonStart.Tag = "accent";
             buttonStart.Text = "";
             buttonStart.UseVisualStyleBackColor = false;
             buttonStart.Click += buttonStart_Click;
+
+            // buttonStop
+            buttonStop.Dock = DockStyle.Fill;
+            buttonStop.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonStop.Margin = new Padding(0, 6, 6, 0);
+            buttonStop.MinimumSize = new Size(0, 44);
+            buttonStop.Tag = "accent";
+            buttonStop.Text = "";
+            buttonStop.UseVisualStyleBackColor = false;
+            buttonStop.Click += buttonStop_Click;
+
+            // buttonPause
+            buttonPause.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonPause.AutoSize = true;
+            buttonPause.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            buttonPause.Font = new Font("Segoe UI Symbol", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonPause.Margin = new Padding(0, 6, 0, 0);
+            buttonPause.MinimumSize = new Size(44, 44);
+            buttonPause.Tag = "ghost";
+            buttonPause.Text = "";
+            buttonPause.UseVisualStyleBackColor = false;
+            buttonPause.Visible = false;
+            buttonPause.Click += buttonPause_Click;
 
             // tabPageSettings
             tabPageSettings.Controls.Add(layoutSettings);

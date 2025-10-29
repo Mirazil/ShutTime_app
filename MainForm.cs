@@ -28,6 +28,7 @@ namespace ShutdownTimerApp
         private readonly System.Windows.Forms.Timer timer;
         private TimeSpan remainingTime;
         private bool isRunning = false;
+        private bool isPaused = false;
         private bool idleMode = false; // режим «при бездействии»
         private bool exitRequested = false;
 
@@ -91,6 +92,7 @@ namespace ShutdownTimerApp
             checkBoxRunMinimized.Text = I18n.T("RunMinimized");
             checkBoxMinimizeOnClose.Text = I18n.T("MinimizeOnClose");
             buttonApplySettings.Text = I18n.T("Btn_OK");
+            buttonStop.Text = I18n.T("Btn_Stop");
             UpdateTrayLocalization();
             RefillActionItems();
             RefillConditionItems();
@@ -131,6 +133,12 @@ namespace ShutdownTimerApp
             labelCountdown.Text = "00:00:00";
             maskedTextBoxTime.Text = DefaultTimerValue; // 00:45:00
             buttonStart.Text = PlaySymbol;
+            buttonStart.Enabled = true;
+            buttonStop.Text = I18n.T("Btn_Stop");
+            buttonStop.Enabled = false;
+            buttonPause.Text = PauseSymbol;
+            buttonPause.Visible = false;
+            buttonPause.Enabled = true;
         }
 
         private void PopulateSettingsLists()
@@ -247,8 +255,16 @@ namespace ShutdownTimerApp
         {
             timer.Stop();
             isRunning = false;
+            isPaused = false;
             idleMode = false;
+            remainingTime = TimeSpan.Zero;
             buttonStart.Text = PlaySymbol;
+            buttonStart.Enabled = true;
+            buttonStop.Enabled = false;
+            buttonPause.Visible = false;
+            buttonPause.Text = PauseSymbol;
+            buttonPause.Enabled = true;
+            labelCountdown.Text = "00:00:00";
         }
 
         private void ExecuteAction()
@@ -350,18 +366,22 @@ namespace ShutdownTimerApp
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            if (!isRunning)
+            if (isRunning)
             {
-                idleMode = comboBoxCondition.SelectedIndex == 2;
-                if (idleMode)
-                {
-                    // таймер просто будет отслеживать бездействие
-                    buttonStart.Text = PauseSymbol;
-                    isRunning = true;
-                    timer.Start();
-                    return;
-                }
+                return;
+            }
 
+            idleMode = comboBoxCondition.SelectedIndex == 2;
+            isPaused = false;
+
+            if (idleMode)
+            {
+                // таймер просто будет отслеживать бездействие
+                remainingTime = TimeSpan.Zero;
+                labelCountdown.Text = ParseTime(maskedTextBoxTime.Text).ToString(@"hh\:mm\:ss");
+            }
+            else
+            {
                 var input = ParseTime(maskedTextBoxTime.Text);
 
                 if (comboBoxCondition.SelectedIndex == 0) // «Через заданное время»
@@ -378,13 +398,44 @@ namespace ShutdownTimerApp
                 }
 
                 labelCountdown.Text = remainingTime.ToString(@"hh\:mm\:ss");
-                timer.Start();
-                isRunning = true;
-                buttonStart.Text = PauseSymbol;
+            }
+
+            timer.Start();
+            isRunning = true;
+            buttonStart.Text = PlaySymbol;
+            buttonStart.Enabled = false;
+            buttonStop.Enabled = true;
+            buttonPause.Visible = true;
+            buttonPause.Text = PauseSymbol;
+            buttonPause.Enabled = true;
+        }
+
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            StopTimer();
+        }
+
+        private void buttonPause_Click(object sender, EventArgs e)
+        {
+            if (!isRunning)
+            {
+                return;
+            }
+
+            if (!isPaused)
+            {
+                timer.Stop();
+                isPaused = true;
+                buttonPause.Text = PlaySymbol;
+                buttonStart.Enabled = false;
+                buttonStop.Enabled = true;
             }
             else
             {
-                StopTimer();
+                timer.Start();
+                isPaused = false;
+                buttonPause.Text = PauseSymbol;
+                buttonStop.Enabled = true;
             }
         }
 
